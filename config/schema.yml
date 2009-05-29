@@ -1,0 +1,39 @@
+propel:
+  _attributes:      { package: plugins.cre8MenuPlugin.lib.model }
+  
+  cre8_menu_type:
+    id:         ~
+    name:       { type: varchar(40), required: true }
+    uuid:       { type: varchar(36), required: true }
+  
+  cre8_content_type:
+    id:         ~
+    name:       { type: varchar(40), required: true }
+  
+  cre8_menu_content:
+    id:         ~
+    cre8_menu_type_id: { type: integer, required: true, foreignTable: cre8_menu_type, foreignReference: id, onUpdate: cascade, onDelete: cascade }
+    name:       { type: varchar(40), required: true }
+    cre8_content_type_id:    { type: integer, required: true, foreignTable: cre8_content_type, foreignReference: id, onUpdate: cascade, onDelete: cascade }
+    slug:       { type: varchar(60), required: true }
+    meta_title: { type: varchar(70) }
+    meta_description: { type: varchar(155) }
+    meta_keywords: { type: varchar(255) }
+  
+  cre8_menu_content_type_flash:
+    id:         ~
+    cre8_menu_content_id: { type: integer, required: true, foreignTable: cre8_menu_content, foreignReference: id, onUpdate: cascade, onDelete: cascade }
+    file_name:   { type: varchar(128), required: true }
+  
+  cre8_menu_content_type_cms:
+    id:         ~
+    cre8_menu_content_id: { type: integer, required: true, foreignTable: cre8_menu_content, foreignReference: id, onUpdate: cascade, onDelete: cascade }
+    content:    { type: longvarchar }
+  
+  cre8_menu_content_type_internal_link:
+    id:         ~
+    cre8_menu_content_id: { type: integer, required: true, foreignTable: cre8_menu_content, foreignReference: id, onUpdate: cascade, onDelete: cascade }
+    module:       { type: varchar(255), required: true }
+    action:       { type: varchar(255), required: true }
+    parameters:   { type: varchar(255) }
+  
