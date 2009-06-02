@@ -12,5 +12,7 @@ class Cre8MenuTypeForm extends BaseCre8MenuTypeForm
 {
   public function configure()
   {
+    parent::configure();
+    unset($this['uuid']);
   }
 }

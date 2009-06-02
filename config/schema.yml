@@ -17,10 +17,21 @@ propel:
     cre8_content_type_id:    { type: integer, required: true, foreignTable: cre8_content_type, foreignReference: id, onUpdate: cascade, onDelete: cascade }
     slug:       { type: varchar(60), required: true }
     meta_title: { type: varchar(70) }
-    meta_description: { type: varchar(155) }
-    meta_keywords: { type: varchar(255) }
+    meta_description: { type: longvarchar }
+    meta_keywords: { type: longvarchar }
+    template:   { type: varchar(40) }
+    is_active:  { type: boolean, default: 1 }
+    is_hidden:  { type: boolean, default: 0 }
+    rank:       { type: integer, required: true }
   
   cre8_menu_content_type_flash:
+    id:         ~
+    cre8_menu_content_id: { type: integer, required: true, foreignTable: cre8_menu_content, foreignReference: id, onUpdate: cascade, onDelete: cascade }
+    file_name:   { type: varchar(128), required: true }
+    width:       { type: integer, required: true }
+    height:      { type: integer, required: true }
+  
+  cre8_menu_content_type_image:
     id:         ~
     cre8_menu_content_id: { type: integer, required: true, foreignTable: cre8_menu_content, foreignReference: id, onUpdate: cascade, onDelete: cascade }
     file_name:   { type: varchar(128), required: true }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'cre8_menu_content_type_internal_link' table.
+ * Base static class for performing query and update operations on the 'cre8_menu_content_type_image' table.
  *
  * 
  *
@@ -11,43 +11,37 @@
  *
  * @package    plugins.cre8MenuPlugin.lib.model.om
  */
-abstract class BaseCre8MenuContentTypeInternalLinkPeer {
+abstract class BaseCre8MenuContentTypeImagePeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'cre8_menu_content_type_internal_link';
+	const TABLE_NAME = 'cre8_menu_content_type_image';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'plugins.cre8MenuPlugin.lib.model.Cre8MenuContentTypeInternalLink';
+	const CLASS_DEFAULT = 'plugins.cre8MenuPlugin.lib.model.Cre8MenuContentTypeImage';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'cre8_menu_content_type_internal_link.ID';
+	const ID = 'cre8_menu_content_type_image.ID';
 
 	/** the column name for the CRE8_MENU_CONTENT_ID field */
-	const CRE8_MENU_CONTENT_ID = 'cre8_menu_content_type_internal_link.CRE8_MENU_CONTENT_ID';
+	const CRE8_MENU_CONTENT_ID = 'cre8_menu_content_type_image.CRE8_MENU_CONTENT_ID';
 
-	/** the column name for the MODULE field */
-	const MODULE = 'cre8_menu_content_type_internal_link.MODULE';
-
-	/** the column name for the ACTION field */
-	const ACTION = 'cre8_menu_content_type_internal_link.ACTION';
-
-	/** the column name for the PARAMETERS field */
-	const PARAMETERS = 'cre8_menu_content_type_internal_link.PARAMETERS';
+	/** the column name for the FILE_NAME field */
+	const FILE_NAME = 'cre8_menu_content_type_image.FILE_NAME';
 
 	/**
-	 * An identiy map to hold any loaded instances of Cre8MenuContentTypeInternalLink objects.
+	 * An identiy map to hold any loaded instances of Cre8MenuContentTypeImage objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array Cre8MenuContentTypeInternalLink[]
+	 * @var        array Cre8MenuContentTypeImage[]
 	 */
 	public static $instances = array();
 
@@ -64,11 +58,11 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Cre8MenuContentId', 'Module', 'Action', 'Parameters', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'cre8MenuContentId', 'module', 'action', 'parameters', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CRE8_MENU_CONTENT_ID, self::MODULE, self::ACTION, self::PARAMETERS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'cre8_menu_content_id', 'module', 'action', 'parameters', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Cre8MenuContentId', 'FileName', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'cre8MenuContentId', 'fileName', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CRE8_MENU_CONTENT_ID, self::FILE_NAME, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'cre8_menu_content_id', 'file_name', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -78,11 +72,11 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Cre8MenuContentId' => 1, 'Module' => 2, 'Action' => 3, 'Parameters' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'cre8MenuContentId' => 1, 'module' => 2, 'action' => 3, 'parameters' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CRE8_MENU_CONTENT_ID => 1, self::MODULE => 2, self::ACTION => 3, self::PARAMETERS => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'cre8_menu_content_id' => 1, 'module' => 2, 'action' => 3, 'parameters' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Cre8MenuContentId' => 1, 'FileName' => 2, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'cre8MenuContentId' => 1, 'fileName' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CRE8_MENU_CONTENT_ID => 1, self::FILE_NAME => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'cre8_menu_content_id' => 1, 'file_name' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -92,7 +86,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			self::$mapBuilder = new Cre8MenuContentTypeInternalLinkMapBuilder();
+			self::$mapBuilder = new Cre8MenuContentTypeImageMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -142,12 +136,12 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. Cre8MenuContentTypeInternalLinkPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. Cre8MenuContentTypeImagePeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(Cre8MenuContentTypeImagePeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -164,15 +158,11 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(Cre8MenuContentTypeInternalLinkPeer::ID);
+		$criteria->addSelectColumn(Cre8MenuContentTypeImagePeer::ID);
 
-		$criteria->addSelectColumn(Cre8MenuContentTypeInternalLinkPeer::CRE8_MENU_CONTENT_ID);
+		$criteria->addSelectColumn(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID);
 
-		$criteria->addSelectColumn(Cre8MenuContentTypeInternalLinkPeer::MODULE);
-
-		$criteria->addSelectColumn(Cre8MenuContentTypeInternalLinkPeer::ACTION);
-
-		$criteria->addSelectColumn(Cre8MenuContentTypeInternalLinkPeer::PARAMETERS);
+		$criteria->addSelectColumn(Cre8MenuContentTypeImagePeer::FILE_NAME);
 
 	}
 
@@ -192,27 +182,27 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(Cre8MenuContentTypeImagePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			Cre8MenuContentTypeInternalLinkPeer::addSelectColumns($criteria);
+			Cre8MenuContentTypeImagePeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doCount:doCount') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doCount:doCount') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $criteria, $con);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $criteria, $con);
     }
 
 
@@ -232,7 +222,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     Cre8MenuContentTypeInternalLink
+	 * @return     Cre8MenuContentTypeImage
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -240,7 +230,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = Cre8MenuContentTypeInternalLinkPeer::doSelect($critcopy, $con);
+		$objects = Cre8MenuContentTypeImagePeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -257,7 +247,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return Cre8MenuContentTypeInternalLinkPeer::populateObjects(Cre8MenuContentTypeInternalLinkPeer::doSelectStmt($criteria, $con));
+		return Cre8MenuContentTypeImagePeer::populateObjects(Cre8MenuContentTypeImagePeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -275,19 +265,19 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doSelectStmt:doSelectStmt') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doSelectStmt:doSelectStmt') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $criteria, $con);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $criteria, $con);
     }
 
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			Cre8MenuContentTypeInternalLinkPeer::addSelectColumns($criteria);
+			Cre8MenuContentTypeImagePeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -305,10 +295,10 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      Cre8MenuContentTypeInternalLink $value A Cre8MenuContentTypeInternalLink object.
+	 * @param      Cre8MenuContentTypeImage $value A Cre8MenuContentTypeImage object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(Cre8MenuContentTypeInternalLink $obj, $key = null)
+	public static function addInstanceToPool(Cre8MenuContentTypeImage $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -326,18 +316,18 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A Cre8MenuContentTypeInternalLink object or a primary key value.
+	 * @param      mixed $value A Cre8MenuContentTypeImage object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof Cre8MenuContentTypeInternalLink) {
+			if (is_object($value) && $value instanceof Cre8MenuContentTypeImage) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Cre8MenuContentTypeInternalLink object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Cre8MenuContentTypeImage object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -352,7 +342,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     Cre8MenuContentTypeInternalLink Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     Cre8MenuContentTypeImage Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -406,12 +396,12 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = Cre8MenuContentTypeInternalLinkPeer::getOMClass();
+		$cls = Cre8MenuContentTypeImagePeer::getOMClass();
 		$cls = substr('.'.$cls, strrpos('.'.$cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = Cre8MenuContentTypeInternalLinkPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = Cre8MenuContentTypeInternalLinkPeer::getInstanceFromPool($key))) {
+			$key = Cre8MenuContentTypeImagePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = Cre8MenuContentTypeImagePeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -421,7 +411,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				Cre8MenuContentTypeInternalLinkPeer::addInstanceToPool($obj, $key);
+				Cre8MenuContentTypeImagePeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -445,14 +435,14 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(Cre8MenuContentTypeImagePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			Cre8MenuContentTypeInternalLinkPeer::addSelectColumns($criteria);
+			Cre8MenuContentTypeImagePeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -461,15 +451,15 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(Cre8MenuContentTypeInternalLinkPeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
 
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doCount:doCount') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doCount:doCount') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $criteria, $con);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $criteria, $con);
     }
 
 
@@ -486,20 +476,20 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 
 
 	/**
-	 * Selects a collection of Cre8MenuContentTypeInternalLink objects pre-filled with their Cre8MenuContent objects.
+	 * Selects a collection of Cre8MenuContentTypeImage objects pre-filled with their Cre8MenuContent objects.
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Cre8MenuContentTypeInternalLink objects.
+	 * @return     array Array of Cre8MenuContentTypeImage objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
 	public static function doSelectJoinCre8MenuContent(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doSelectJoin:doSelectJoin') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doSelectJoin:doSelectJoin') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $c, $con);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $c, $con);
     }
 
 
@@ -510,28 +500,28 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		Cre8MenuContentTypeInternalLinkPeer::addSelectColumns($c);
-		$startcol = (Cre8MenuContentTypeInternalLinkPeer::NUM_COLUMNS - Cre8MenuContentTypeInternalLinkPeer::NUM_LAZY_LOAD_COLUMNS);
+		Cre8MenuContentTypeImagePeer::addSelectColumns($c);
+		$startcol = (Cre8MenuContentTypeImagePeer::NUM_COLUMNS - Cre8MenuContentTypeImagePeer::NUM_LAZY_LOAD_COLUMNS);
 		Cre8MenuContentPeer::addSelectColumns($c);
 
-		$c->addJoin(array(Cre8MenuContentTypeInternalLinkPeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
+		$c->addJoin(array(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = Cre8MenuContentTypeInternalLinkPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = Cre8MenuContentTypeInternalLinkPeer::getInstanceFromPool($key1))) {
+			$key1 = Cre8MenuContentTypeImagePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = Cre8MenuContentTypeImagePeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$omClass = Cre8MenuContentTypeInternalLinkPeer::getOMClass();
+				$omClass = Cre8MenuContentTypeImagePeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				Cre8MenuContentTypeInternalLinkPeer::addInstanceToPool($obj1, $key1);
+				Cre8MenuContentTypeImagePeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
 			$key2 = Cre8MenuContentPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -547,8 +537,8 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 					Cre8MenuContentPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 
-				// Add the $obj1 (Cre8MenuContentTypeInternalLink) to $obj2 (Cre8MenuContent)
-				$obj2->addCre8MenuContentTypeInternalLink($obj1);
+				// Add the $obj1 (Cre8MenuContentTypeImage) to $obj2 (Cre8MenuContent)
+				$obj2->addCre8MenuContentTypeImage($obj1);
 
 			} // if joined row was not null
 
@@ -576,14 +566,14 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(Cre8MenuContentTypeImagePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			Cre8MenuContentTypeInternalLinkPeer::addSelectColumns($criteria);
+			Cre8MenuContentTypeImagePeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -592,14 +582,14 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(Cre8MenuContentTypeInternalLinkPeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doCount:doCount') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doCount:doCount') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $criteria, $con);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $criteria, $con);
     }
 
 
@@ -615,21 +605,21 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	}
 
 	/**
-	 * Selects a collection of Cre8MenuContentTypeInternalLink objects pre-filled with all related objects.
+	 * Selects a collection of Cre8MenuContentTypeImage objects pre-filled with all related objects.
 	 *
 	 * @param      Criteria  $c
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Cre8MenuContentTypeInternalLink objects.
+	 * @return     array Array of Cre8MenuContentTypeImage objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
 	public static function doSelectJoinAll(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doSelectJoinAll:doSelectJoinAll') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doSelectJoinAll:doSelectJoinAll') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $c, $con);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $c, $con);
     }
 
 
@@ -640,29 +630,29 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		Cre8MenuContentTypeInternalLinkPeer::addSelectColumns($c);
-		$startcol2 = (Cre8MenuContentTypeInternalLinkPeer::NUM_COLUMNS - Cre8MenuContentTypeInternalLinkPeer::NUM_LAZY_LOAD_COLUMNS);
+		Cre8MenuContentTypeImagePeer::addSelectColumns($c);
+		$startcol2 = (Cre8MenuContentTypeImagePeer::NUM_COLUMNS - Cre8MenuContentTypeImagePeer::NUM_LAZY_LOAD_COLUMNS);
 
 		Cre8MenuContentPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (Cre8MenuContentPeer::NUM_COLUMNS - Cre8MenuContentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$c->addJoin(array(Cre8MenuContentTypeInternalLinkPeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
+		$c->addJoin(array(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID,), array(Cre8MenuContentPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = Cre8MenuContentTypeInternalLinkPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = Cre8MenuContentTypeInternalLinkPeer::getInstanceFromPool($key1))) {
+			$key1 = Cre8MenuContentTypeImagePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = Cre8MenuContentTypeImagePeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$omClass = Cre8MenuContentTypeInternalLinkPeer::getOMClass();
+				$omClass = Cre8MenuContentTypeImagePeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				Cre8MenuContentTypeInternalLinkPeer::addInstanceToPool($obj1, $key1);
+				Cre8MenuContentTypeImagePeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 			// Add objects for joined Cre8MenuContent rows
@@ -681,8 +671,8 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 					Cre8MenuContentPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (Cre8MenuContentTypeInternalLink) to the collection in $obj2 (Cre8MenuContent)
-				$obj2->addCre8MenuContentTypeInternalLink($obj1);
+				// Add the $obj1 (Cre8MenuContentTypeImage) to the collection in $obj2 (Cre8MenuContent)
+				$obj2->addCre8MenuContentTypeImage($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -719,13 +709,13 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 */
 	public static function getOMClass()
 	{
-		return Cre8MenuContentTypeInternalLinkPeer::CLASS_DEFAULT;
+		return Cre8MenuContentTypeImagePeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Cre8MenuContentTypeInternalLink or Criteria object.
+	 * Method perform an INSERT on the database, given a Cre8MenuContentTypeImage or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Cre8MenuContentTypeInternalLink object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or Cre8MenuContentTypeImage object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -734,9 +724,9 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doInsert:pre') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doInsert:pre') as $callable)
     {
-      $ret = call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $values, $con);
+      $ret = call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $values, $con);
       if (false !== $ret)
       {
         return $ret;
@@ -745,17 +735,17 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Cre8MenuContentTypeInternalLink object
+			$criteria = $values->buildCriteria(); // build Criteria from Cre8MenuContentTypeImage object
 		}
 
-		if ($criteria->containsKey(Cre8MenuContentTypeInternalLinkPeer::ID) && $criteria->keyContainsValue(Cre8MenuContentTypeInternalLinkPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.Cre8MenuContentTypeInternalLinkPeer::ID.')');
+		if ($criteria->containsKey(Cre8MenuContentTypeImagePeer::ID) && $criteria->keyContainsValue(Cre8MenuContentTypeImagePeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.Cre8MenuContentTypeImagePeer::ID.')');
 		}
 
 
@@ -774,18 +764,18 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		}
 
 		
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doInsert:post') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doInsert:post') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $values, $con, $pk);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $values, $con, $pk);
     }
 
     return $pk;
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Cre8MenuContentTypeInternalLink or Criteria object.
+	 * Method perform an UPDATE on the database, given a Cre8MenuContentTypeImage or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Cre8MenuContentTypeInternalLink object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or Cre8MenuContentTypeImage object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -794,9 +784,9 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doUpdate:pre') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doUpdate:pre') as $callable)
     {
-      $ret = call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $values, $con);
+      $ret = call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $values, $con);
       if (false !== $ret)
       {
         return $ret;
@@ -805,7 +795,7 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -813,10 +803,10 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(Cre8MenuContentTypeInternalLinkPeer::ID);
-			$selectCriteria->add(Cre8MenuContentTypeInternalLinkPeer::ID, $criteria->remove(Cre8MenuContentTypeInternalLinkPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(Cre8MenuContentTypeImagePeer::ID);
+			$selectCriteria->add(Cre8MenuContentTypeImagePeer::ID, $criteria->remove(Cre8MenuContentTypeImagePeer::ID), $comparison);
 
-		} else { // $values is Cre8MenuContentTypeInternalLink object
+		} else { // $values is Cre8MenuContentTypeImage object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -827,30 +817,30 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 		$ret = BasePeer::doUpdate($selectCriteria, $criteria, $con);
 	
 
-    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeInternalLinkPeer:doUpdate:post') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImagePeer:doUpdate:post') as $callable)
     {
-      call_user_func($callable, 'BaseCre8MenuContentTypeInternalLinkPeer', $values, $con, $ret);
+      call_user_func($callable, 'BaseCre8MenuContentTypeImagePeer', $values, $con, $ret);
     }
 
     return $ret;
   }
 
 	/**
-	 * Method to DELETE all rows from the cre8_menu_content_type_internal_link table.
+	 * Method to DELETE all rows from the cre8_menu_content_type_image table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(Cre8MenuContentTypeImagePeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -860,9 +850,9 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Cre8MenuContentTypeInternalLink or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a Cre8MenuContentTypeImage or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Cre8MenuContentTypeInternalLink object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or Cre8MenuContentTypeImage object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -873,20 +863,20 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			Cre8MenuContentTypeInternalLinkPeer::clearInstancePool();
+			Cre8MenuContentTypeImagePeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Cre8MenuContentTypeInternalLink) {
+		} elseif ($values instanceof Cre8MenuContentTypeImage) {
 			// invalidate the cache for this single object
-			Cre8MenuContentTypeInternalLinkPeer::removeInstanceFromPool($values);
+			Cre8MenuContentTypeImagePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -895,11 +885,11 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(Cre8MenuContentTypeInternalLinkPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(Cre8MenuContentTypeImagePeer::ID, (array) $values, Criteria::IN);
 
 			foreach ((array) $values as $singleval) {
 				// we can invalidate the cache for this single object
-				Cre8MenuContentTypeInternalLinkPeer::removeInstanceFromPool($singleval);
+				Cre8MenuContentTypeImagePeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -924,24 +914,24 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Cre8MenuContentTypeInternalLink object.
+	 * Validates all modified columns of given Cre8MenuContentTypeImage object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Cre8MenuContentTypeInternalLink $obj The object to validate.
+	 * @param      Cre8MenuContentTypeImage $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Cre8MenuContentTypeInternalLink $obj, $cols = null)
+	public static function doValidate(Cre8MenuContentTypeImage $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(Cre8MenuContentTypeImagePeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(Cre8MenuContentTypeImagePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -957,11 +947,11 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 
 		}
 
-		$res =  BasePeer::doValidate(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Cre8MenuContentTypeImagePeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = Cre8MenuContentTypeInternalLinkPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = Cre8MenuContentTypeImagePeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
         }
     }
 
@@ -973,23 +963,23 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     Cre8MenuContentTypeInternalLink
+	 * @return     Cre8MenuContentTypeImage
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = Cre8MenuContentTypeInternalLinkPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = Cre8MenuContentTypeImagePeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME);
-		$criteria->add(Cre8MenuContentTypeInternalLinkPeer::ID, $pk);
+		$criteria = new Criteria(Cre8MenuContentTypeImagePeer::DATABASE_NAME);
+		$criteria->add(Cre8MenuContentTypeImagePeer::ID, $pk);
 
-		$v = Cre8MenuContentTypeInternalLinkPeer::doSelect($criteria, $con);
+		$v = Cre8MenuContentTypeImagePeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -1005,30 +995,30 @@ abstract class BaseCre8MenuContentTypeInternalLinkPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME);
-			$criteria->add(Cre8MenuContentTypeInternalLinkPeer::ID, $pks, Criteria::IN);
-			$objs = Cre8MenuContentTypeInternalLinkPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(Cre8MenuContentTypeImagePeer::DATABASE_NAME);
+			$criteria->add(Cre8MenuContentTypeImagePeer::ID, $pks, Criteria::IN);
+			$objs = Cre8MenuContentTypeImagePeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseCre8MenuContentTypeInternalLinkPeer
+} // BaseCre8MenuContentTypeImagePeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the Cre8MenuContentTypeInternalLinkPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the Cre8MenuContentTypeInternalLinkPeer class:
+// NOTE: This static code cannot call methods on the Cre8MenuContentTypeImagePeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the Cre8MenuContentTypeImagePeer class:
 //
-// Propel::getDatabaseMap(Cre8MenuContentTypeInternalLinkPeer::DATABASE_NAME)->addTableBuilder(Cre8MenuContentTypeInternalLinkPeer::TABLE_NAME, Cre8MenuContentTypeInternalLinkPeer::getMapBuilder());
+// Propel::getDatabaseMap(Cre8MenuContentTypeImagePeer::DATABASE_NAME)->addTableBuilder(Cre8MenuContentTypeImagePeer::TABLE_NAME, Cre8MenuContentTypeImagePeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseCre8MenuContentTypeInternalLinkPeer::DATABASE_NAME)->addTableBuilder(BaseCre8MenuContentTypeInternalLinkPeer::TABLE_NAME, BaseCre8MenuContentTypeInternalLinkPeer::getMapBuilder());
+Propel::getDatabaseMap(BaseCre8MenuContentTypeImagePeer::DATABASE_NAME)->addTableBuilder(BaseCre8MenuContentTypeImagePeer::TABLE_NAME, BaseCre8MenuContentTypeImagePeer::getMapBuilder());
 

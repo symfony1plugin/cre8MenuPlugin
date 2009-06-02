@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base class that represents a row from the 'cre8_content_type' table.
+ * Base class that represents a row from the 'cre8_menu_content_type_image' table.
  *
  * 
  *
@@ -11,16 +11,16 @@
  *
  * @package    plugins.cre8MenuPlugin.lib.model.om
  */
-abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
+abstract class BaseCre8MenuContentTypeImage extends BaseObject  implements Persistent {
 
 
-  const PEER = 'Cre8ContentTypePeer';
+  const PEER = 'Cre8MenuContentTypeImagePeer';
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        Cre8ContentTypePeer
+	 * @var        Cre8MenuContentTypeImagePeer
 	 */
 	protected static $peer;
 
@@ -31,20 +31,21 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the name field.
+	 * The value for the cre8_menu_content_id field.
+	 * @var        int
+	 */
+	protected $cre8_menu_content_id;
+
+	/**
+	 * The value for the file_name field.
 	 * @var        string
 	 */
-	protected $name;
+	protected $file_name;
 
 	/**
-	 * @var        array Cre8MenuContent[] Collection to store aggregation of Cre8MenuContent objects.
+	 * @var        Cre8MenuContent
 	 */
-	protected $collCre8MenuContents;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collCre8MenuContents.
-	 */
-	private $lastCre8MenuContentCriteria = null;
+	protected $aCre8MenuContent;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -61,7 +62,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	/**
-	 * Initializes internal state of BaseCre8ContentType object.
+	 * Initializes internal state of BaseCre8MenuContentTypeImage object.
 	 * @see        applyDefaults()
 	 */
 	public function __construct()
@@ -91,20 +92,30 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [name] column value.
+	 * Get the [cre8_menu_content_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getCre8MenuContentId()
+	{
+		return $this->cre8_menu_content_id;
+	}
+
+	/**
+	 * Get the [file_name] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getName()
+	public function getFileName()
 	{
-		return $this->name;
+		return $this->file_name;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Cre8ContentType The current object (for fluent API support)
+	 * @return     Cre8MenuContentTypeImage The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -114,31 +125,55 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = Cre8ContentTypePeer::ID;
+			$this->modifiedColumns[] = Cre8MenuContentTypeImagePeer::ID;
 		}
 
 		return $this;
 	} // setId()
 
 	/**
-	 * Set the value of [name] column.
+	 * Set the value of [cre8_menu_content_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Cre8MenuContentTypeImage The current object (for fluent API support)
+	 */
+	public function setCre8MenuContentId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->cre8_menu_content_id !== $v) {
+			$this->cre8_menu_content_id = $v;
+			$this->modifiedColumns[] = Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID;
+		}
+
+		if ($this->aCre8MenuContent !== null && $this->aCre8MenuContent->getId() !== $v) {
+			$this->aCre8MenuContent = null;
+		}
+
+		return $this;
+	} // setCre8MenuContentId()
+
+	/**
+	 * Set the value of [file_name] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Cre8ContentType The current object (for fluent API support)
+	 * @return     Cre8MenuContentTypeImage The current object (for fluent API support)
 	 */
-	public function setName($v)
+	public function setFileName($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->name !== $v) {
-			$this->name = $v;
-			$this->modifiedColumns[] = Cre8ContentTypePeer::NAME;
+		if ($this->file_name !== $v) {
+			$this->file_name = $v;
+			$this->modifiedColumns[] = Cre8MenuContentTypeImagePeer::FILE_NAME;
 		}
 
 		return $this;
-	} // setName()
+	} // setFileName()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -178,7 +213,8 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->cre8_menu_content_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->file_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -188,10 +224,10 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 2; // 2 = Cre8ContentTypePeer::NUM_COLUMNS - Cre8ContentTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 3; // 3 = Cre8MenuContentTypeImagePeer::NUM_COLUMNS - Cre8MenuContentTypeImagePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Cre8ContentType object", $e);
+			throw new PropelException("Error populating Cre8MenuContentTypeImage object", $e);
 		}
 	}
 
@@ -211,6 +247,9 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aCre8MenuContent !== null && $this->cre8_menu_content_id !== $this->aCre8MenuContent->getId()) {
+			$this->aCre8MenuContent = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -234,13 +273,13 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8ContentTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = Cre8ContentTypePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = Cre8MenuContentTypeImagePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -250,9 +289,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->collCre8MenuContents = null;
-			$this->lastCre8MenuContentCriteria = null;
-
+			$this->aCre8MenuContent = null;
 		} // if (deep)
 	}
 
@@ -268,7 +305,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	public function delete(PropelPDO $con = null)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8ContentType:delete:pre') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImage:delete:pre') as $callable)
     {
       $ret = call_user_func($callable, $this, $con);
       if ($ret)
@@ -283,12 +320,12 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8ContentTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
-			Cre8ContentTypePeer::doDelete($this, $con);
+			Cre8MenuContentTypeImagePeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -297,7 +334,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 		}
 	
 
-    foreach (sfMixer::getCallables('BaseCre8ContentType:delete:post') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImage:delete:post') as $callable)
     {
       call_user_func($callable, $this, $con);
     }
@@ -319,7 +356,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	public function save(PropelPDO $con = null)
 	{
 
-    foreach (sfMixer::getCallables('BaseCre8ContentType:save:pre') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImage:save:pre') as $callable)
     {
       $affectedRows = call_user_func($callable, $this, $con);
       if (is_int($affectedRows))
@@ -334,19 +371,19 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(Cre8ContentTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(Cre8MenuContentTypeImagePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$affectedRows = $this->doSave($con);
 			$con->commit();
-    foreach (sfMixer::getCallables('BaseCre8ContentType:save:post') as $callable)
+    foreach (sfMixer::getCallables('BaseCre8MenuContentTypeImage:save:post') as $callable)
     {
       call_user_func($callable, $this, $con, $affectedRows);
     }
 
-			Cre8ContentTypePeer::addInstanceToPool($this);
+			Cre8MenuContentTypeImagePeer::addInstanceToPool($this);
 			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollBack();
@@ -371,14 +408,26 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aCre8MenuContent !== null) {
+				if ($this->aCre8MenuContent->isModified() || $this->aCre8MenuContent->isNew()) {
+					$affectedRows += $this->aCre8MenuContent->save($con);
+				}
+				$this->setCre8MenuContent($this->aCre8MenuContent);
+			}
+
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = Cre8ContentTypePeer::ID;
+				$this->modifiedColumns[] = Cre8MenuContentTypeImagePeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = Cre8ContentTypePeer::doInsert($this, $con);
+					$pk = Cre8MenuContentTypeImagePeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -387,18 +436,10 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += Cre8ContentTypePeer::doUpdate($this, $con);
+					$affectedRows += Cre8MenuContentTypeImagePeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
-			}
-
-			if ($this->collCre8MenuContents !== null) {
-				foreach ($this->collCre8MenuContents as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
 			}
 
 			$this->alreadyInSave = false;
@@ -467,18 +508,22 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = Cre8ContentTypePeer::doValidate($this, $columns)) !== true) {
-				$failureMap = array_merge($failureMap, $retval);
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aCre8MenuContent !== null) {
+				if (!$this->aCre8MenuContent->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aCre8MenuContent->getValidationFailures());
+				}
 			}
 
 
-				if ($this->collCre8MenuContents !== null) {
-					foreach ($this->collCre8MenuContents as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
+			if (($retval = Cre8MenuContentTypeImagePeer::doValidate($this, $columns)) !== true) {
+				$failureMap = array_merge($failureMap, $retval);
+			}
+
 
 
 			$this->alreadyInValidation = false;
@@ -498,7 +543,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = Cre8ContentTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = Cre8MenuContentTypeImagePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -517,7 +562,10 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getName();
+				return $this->getCre8MenuContentId();
+				break;
+			case 2:
+				return $this->getFileName();
 				break;
 			default:
 				return null;
@@ -538,10 +586,11 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = Cre8ContentTypePeer::getFieldNames($keyType);
+		$keys = Cre8MenuContentTypeImagePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getName(),
+			$keys[1] => $this->getCre8MenuContentId(),
+			$keys[2] => $this->getFileName(),
 		);
 		return $result;
 	}
@@ -558,7 +607,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = Cre8ContentTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = Cre8MenuContentTypeImagePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -577,7 +626,10 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setName($value);
+				$this->setCre8MenuContentId($value);
+				break;
+			case 2:
+				$this->setFileName($value);
 				break;
 		} // switch()
 	}
@@ -601,10 +653,11 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = Cre8ContentTypePeer::getFieldNames($keyType);
+		$keys = Cre8MenuContentTypeImagePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setCre8MenuContentId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setFileName($arr[$keys[2]]);
 	}
 
 	/**
@@ -614,10 +667,11 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(Cre8ContentTypePeer::DATABASE_NAME);
+		$criteria = new Criteria(Cre8MenuContentTypeImagePeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(Cre8ContentTypePeer::ID)) $criteria->add(Cre8ContentTypePeer::ID, $this->id);
-		if ($this->isColumnModified(Cre8ContentTypePeer::NAME)) $criteria->add(Cre8ContentTypePeer::NAME, $this->name);
+		if ($this->isColumnModified(Cre8MenuContentTypeImagePeer::ID)) $criteria->add(Cre8MenuContentTypeImagePeer::ID, $this->id);
+		if ($this->isColumnModified(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID)) $criteria->add(Cre8MenuContentTypeImagePeer::CRE8_MENU_CONTENT_ID, $this->cre8_menu_content_id);
+		if ($this->isColumnModified(Cre8MenuContentTypeImagePeer::FILE_NAME)) $criteria->add(Cre8MenuContentTypeImagePeer::FILE_NAME, $this->file_name);
 
 		return $criteria;
 	}
@@ -632,9 +686,9 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(Cre8ContentTypePeer::DATABASE_NAME);
+		$criteria = new Criteria(Cre8MenuContentTypeImagePeer::DATABASE_NAME);
 
-		$criteria->add(Cre8ContentTypePeer::ID, $this->id);
+		$criteria->add(Cre8MenuContentTypeImagePeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -665,28 +719,16 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Cre8ContentType (or compatible) type.
+	 * @param      object $copyObj An object of Cre8MenuContentTypeImage (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setName($this->name);
+		$copyObj->setCre8MenuContentId($this->cre8_menu_content_id);
 
-
-		if ($deepCopy) {
-			// important: temporarily setNew(false) because this affects the behavior of
-			// the getter/setter methods for fkey referrer objects.
-			$copyObj->setNew(false);
-
-			foreach ($this->getCre8MenuContents() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addCre8MenuContent($relObj->copy($deepCopy));
-				}
-			}
-
-		} // if ($deepCopy)
+		$copyObj->setFileName($this->file_name);
 
 
 		$copyObj->setNew(true);
@@ -704,7 +746,7 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Cre8ContentType Clone of current object.
+	 * @return     Cre8MenuContentTypeImage Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -723,215 +765,65 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     Cre8ContentTypePeer
+	 * @return     Cre8MenuContentTypeImagePeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new Cre8ContentTypePeer();
+			self::$peer = new Cre8MenuContentTypeImagePeer();
 		}
 		return self::$peer;
 	}
 
 	/**
-	 * Clears out the collCre8MenuContents collection (array).
+	 * Declares an association between this object and a Cre8MenuContent object.
 	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addCre8MenuContents()
-	 */
-	public function clearCre8MenuContents()
-	{
-		$this->collCre8MenuContents = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collCre8MenuContents collection (array).
-	 *
-	 * By default this just sets the collCre8MenuContents collection to an empty array (like clearcollCre8MenuContents());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initCre8MenuContents()
-	{
-		$this->collCre8MenuContents = array();
-	}
-
-	/**
-	 * Gets an array of Cre8MenuContent objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Cre8ContentType has previously been saved, it will retrieve
-	 * related Cre8MenuContents from storage. If this Cre8ContentType is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Cre8MenuContent[]
+	 * @param      Cre8MenuContent $v
+	 * @return     Cre8MenuContentTypeImage The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function getCre8MenuContents($criteria = null, PropelPDO $con = null)
+	public function setCre8MenuContent(Cre8MenuContent $v = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(Cre8ContentTypePeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collCre8MenuContents === null) {
-			if ($this->isNew()) {
-			   $this->collCre8MenuContents = array();
-			} else {
-
-				$criteria->add(Cre8MenuContentPeer::CRE8_CONTENT_TYPE_ID, $this->id);
-
-				Cre8MenuContentPeer::addSelectColumns($criteria);
-				$this->collCre8MenuContents = Cre8MenuContentPeer::doSelect($criteria, $con);
-			}
+		if ($v === null) {
+			$this->setCre8MenuContentId(NULL);
 		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(Cre8MenuContentPeer::CRE8_CONTENT_TYPE_ID, $this->id);
-
-				Cre8MenuContentPeer::addSelectColumns($criteria);
-				if (!isset($this->lastCre8MenuContentCriteria) || !$this->lastCre8MenuContentCriteria->equals($criteria)) {
-					$this->collCre8MenuContents = Cre8MenuContentPeer::doSelect($criteria, $con);
-				}
-			}
+			$this->setCre8MenuContentId($v->getId());
 		}
-		$this->lastCre8MenuContentCriteria = $criteria;
-		return $this->collCre8MenuContents;
+
+		$this->aCre8MenuContent = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Cre8MenuContent object, it will not be re-added.
+		if ($v !== null) {
+			$v->addCre8MenuContentTypeImage($this);
+		}
+
+		return $this;
 	}
 
+
 	/**
-	 * Returns the number of related Cre8MenuContent objects.
+	 * Get the associated Cre8MenuContent object
 	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Cre8MenuContent objects.
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Cre8MenuContent The associated Cre8MenuContent object.
 	 * @throws     PropelException
 	 */
-	public function countCre8MenuContents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function getCre8MenuContent(PropelPDO $con = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(Cre8ContentTypePeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
+		if ($this->aCre8MenuContent === null && ($this->cre8_menu_content_id !== null)) {
+			$c = new Criteria(Cre8MenuContentPeer::DATABASE_NAME);
+			$c->add(Cre8MenuContentPeer::ID, $this->cre8_menu_content_id);
+			$this->aCre8MenuContent = Cre8MenuContentPeer::doSelectOne($c, $con);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aCre8MenuContent->addCre8MenuContentTypeImages($this);
+			 */
 		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collCre8MenuContents === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(Cre8MenuContentPeer::CRE8_CONTENT_TYPE_ID, $this->id);
-
-				$count = Cre8MenuContentPeer::doCount($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(Cre8MenuContentPeer::CRE8_CONTENT_TYPE_ID, $this->id);
-
-				if (!isset($this->lastCre8MenuContentCriteria) || !$this->lastCre8MenuContentCriteria->equals($criteria)) {
-					$count = Cre8MenuContentPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collCre8MenuContents);
-				}
-			} else {
-				$count = count($this->collCre8MenuContents);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Cre8MenuContent object to this object
-	 * through the Cre8MenuContent foreign key attribute.
-	 *
-	 * @param      Cre8MenuContent $l Cre8MenuContent
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addCre8MenuContent(Cre8MenuContent $l)
-	{
-		if ($this->collCre8MenuContents === null) {
-			$this->initCre8MenuContents();
-		}
-		if (!in_array($l, $this->collCre8MenuContents, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collCre8MenuContents, $l);
-			$l->setCre8ContentType($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Cre8ContentType is new, it will return
-	 * an empty collection; or if this Cre8ContentType has previously
-	 * been saved, it will retrieve related Cre8MenuContents from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Cre8ContentType.
-	 */
-	public function getCre8MenuContentsJoinCre8MenuType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(Cre8ContentTypePeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collCre8MenuContents === null) {
-			if ($this->isNew()) {
-				$this->collCre8MenuContents = array();
-			} else {
-
-				$criteria->add(Cre8MenuContentPeer::CRE8_CONTENT_TYPE_ID, $this->id);
-
-				$this->collCre8MenuContents = Cre8MenuContentPeer::doSelectJoinCre8MenuType($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(Cre8MenuContentPeer::CRE8_CONTENT_TYPE_ID, $this->id);
-
-			if (!isset($this->lastCre8MenuContentCriteria) || !$this->lastCre8MenuContentCriteria->equals($criteria)) {
-				$this->collCre8MenuContents = Cre8MenuContentPeer::doSelectJoinCre8MenuType($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastCre8MenuContentCriteria = $criteria;
-
-		return $this->collCre8MenuContents;
+		return $this->aCre8MenuContent;
 	}
 
 	/**
@@ -946,22 +838,17 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collCre8MenuContents) {
-				foreach ((array) $this->collCre8MenuContents as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
-		$this->collCre8MenuContents = null;
+			$this->aCre8MenuContent = null;
 	}
 
 
   public function __call($method, $arguments)
   {
-    if (!$callable = sfMixer::getCallable('BaseCre8ContentType:'.$method))
+    if (!$callable = sfMixer::getCallable('BaseCre8MenuContentTypeImage:'.$method))
     {
-      throw new sfException(sprintf('Call to undefined method BaseCre8ContentType::%s', $method));
+      throw new sfException(sprintf('Call to undefined method BaseCre8MenuContentTypeImage::%s', $method));
     }
 
     array_unshift($arguments, $this);
@@ -970,4 +857,4 @@ abstract class BaseCre8ContentType extends BaseObject  implements Persistent {
   }
 
 
-} // BaseCre8ContentType
+} // BaseCre8MenuContentTypeImage

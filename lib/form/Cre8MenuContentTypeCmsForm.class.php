@@ -12,5 +12,6 @@ class Cre8MenuContentTypeCmsForm extends BaseCre8MenuContentTypeCmsForm
 {
   public function configure()
   {
+    $this->setWidget('content', new fckFormWidget(array(), array('height' => 400, 'width' => 600)));
   }
 }

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Cre8MenuContentTypeFlash form base class.
+ * Cre8MenuContentTypeImage form base class.
  *
  * @package    ##PROJECT_NAME##
  * @subpackage form
  * @author     ##AUTHOR_NAME##
  * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 16976 2009-04-04 12:47:44Z fabien $
  */
-class BaseCre8MenuContentTypeFlashForm extends BaseFormPropel
+class BaseCre8MenuContentTypeImageForm extends BaseFormPropel
 {
   public function setup()
   {
@@ -16,19 +16,15 @@ class BaseCre8MenuContentTypeFlashForm extends BaseFormPropel
       'id'                   => new sfWidgetFormInputHidden(),
       'cre8_menu_content_id' => new sfWidgetFormPropelChoice(array('model' => 'Cre8MenuContent', 'add_empty' => false)),
       'file_name'            => new sfWidgetFormInput(),
-      'width'                => new sfWidgetFormInput(),
-      'height'               => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
-      'id'                   => new sfValidatorPropelChoice(array('model' => 'Cre8MenuContentTypeFlash', 'column' => 'id', 'required' => false)),
+      'id'                   => new sfValidatorPropelChoice(array('model' => 'Cre8MenuContentTypeImage', 'column' => 'id', 'required' => false)),
       'cre8_menu_content_id' => new sfValidatorPropelChoice(array('model' => 'Cre8MenuContent', 'column' => 'id')),
       'file_name'            => new sfValidatorString(array('max_length' => 128)),
-      'width'                => new sfValidatorInteger(),
-      'height'               => new sfValidatorInteger(),
     ));
 
-    $this->widgetSchema->setNameFormat('cre8_menu_content_type_flash[%s]');
+    $this->widgetSchema->setNameFormat('cre8_menu_content_type_image[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -37,7 +33,7 @@ class BaseCre8MenuContentTypeFlashForm extends BaseFormPropel
 
   public function getModelName()
   {
-    return 'Cre8MenuContentTypeFlash';
+    return 'Cre8MenuContentTypeImage';
   }
 
 
